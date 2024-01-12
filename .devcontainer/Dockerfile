@@ -79,7 +79,6 @@ RUN tlmgr update --self && \
   graphviz \
   latexindent \
   latexmk && \
-  texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
 
