@@ -51,6 +51,29 @@ RUN apt-get update -y && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+RUN tlmgr update --self && \
+  tlmgr install \
+  collection-bibtexextra \
+  collection-fontsrecommended \
+  collection-langenglish \
+  collection-langjapanese \
+  collection-latexextra \
+  collection-latexrecommended \
+  collection-mathscience \
+  latexdiff \
+  siunitx \
+  newtx \
+  svg \ 
+  minted \
+  plantuml \
+  graphviz \
+  latexindent \
+  latexmk && \
+  texhash && \
+  rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
+  rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
+
+
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
   libfontconfig1 \
@@ -82,29 +105,6 @@ RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 ENV ELECTRON_DISABLE_SECURITY_WARNINGS "true"
 ENV DRAWIO_DISABLE_UPDATE "true"
-
-RUN tlmgr update --self && \
-  tlmgr install \
-  collection-bibtexextra \
-  collection-fontsrecommended \
-  collection-langenglish \
-  collection-langjapanese \
-  collection-latexextra \
-  collection-latexrecommended \
-  collection-mathscience \
-  latexdiff \
-  siunitx \
-  newtx \
-  svg \ 
-  minted \
-  plantuml \
-  graphviz \
-  latexindent \
-  latexmk && \
-  texhash && \
-  rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
-  rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
-
 
 COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
