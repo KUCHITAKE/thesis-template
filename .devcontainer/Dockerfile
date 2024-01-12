@@ -94,9 +94,9 @@ RUN apt-get update -y && \
   xvfb wget libgbm1 libasound2
 
 ARG DRAWIO_VERSION=22.1.18
-RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb && \
-  apt-get install -y /opt/drawio-desktop/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb && \
-  rm -rf /opt/drawio-desktop/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb && \
+RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
+  apt-get install -y /opt/drawio-desktop/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
+  rm -rf /opt/drawio-desktop/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
   apt-get clean autoclean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
