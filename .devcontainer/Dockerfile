@@ -1,5 +1,6 @@
 ARG DEBIAN_VERSION=bookworm-slim
 ARG BASEDEV_VERSION=v0.24.0
+ARG TARGETARCH
 
 FROM debian:${DEBIAN_VERSION} AS chktex
 ARG CHKTEX_VERSION=1.7.8
@@ -28,7 +29,7 @@ RUN apt-get update -y && \
   export TEXLIVE_INSTALL_NO_WELCOME=1 && \
   printf "selected_scheme ${SCHEME}\ninstopt_letter 0\ntlpdbopt_autobackup 0\ntlpdbopt_desktop_integration 0\ntlpdbopt_file_assocs 0\ntlpdbopt_install_docfiles ${DOCFILES}\ntlpdbopt_install_srcfiles ${SRCFILES}" > profile.txt && \
   perl install-tl -profile profile.txt --location ${TEXLIVE_MIRROR} && \
-  ln -sf /usr/local/texlive/${TEXLIVE_VERSION}/bin/$(uname -m)-linux /usr/local/texlive/bin && \
+  ln -sf /usr/local/texlive/${TEXLIVE_VERSION}/bin/${TARGETARCH}-linux /usr/local/texlive/bin && \
   # Cleanup
   cd && \
   apt-get clean autoclean && \
@@ -62,6 +63,26 @@ RUN apt-get update -y && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+RUN apt-get update -y && \
+  apt-get install -y --no-install-recommends \
+  plantuml \
+  graphviz \
+  nodejs \
+  npm \
+  python3 python3-pip python3-matplotlib python3-pandas python3-numpy \
+  xvfb wget libgbm1 libasound2
+
+ARG DRAWIO_VERSION=22.1.18
+RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb -O /tmp/drawio.deb && \
+  apt-get update && \
+  apt-get install -y /tmp/drawio.deb && \
+  rm -rf /tmp/drawio.deb && \
+  apt-get clean autoclean && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/{apt,dpkg,cache,log}/
+ENV ELECTRON_DISABLE_SECURITY_WARNINGS "true"
+ENV DRAWIO_DISABLE_UPDATE "true"
+
 RUN tlmgr update --self && \
   tlmgr install \
   collection-bibtexextra \
@@ -84,24 +105,6 @@ RUN tlmgr update --self && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
 
-RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends \
-  plantuml \
-  graphviz \
-  nodejs \
-  npm \
-  python3 python3-pip python3-matplotlib python3-pandas python3-numpy \
-  xvfb wget libgbm1 libasound2
-
-ARG DRAWIO_VERSION=22.1.18
-RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
-  apt-get install -y /opt/drawio-desktop/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
-  rm -rf /opt/drawio-desktop/drawio-$(uname -m)-${DRAWIO_VERSION}.deb && \
-  apt-get clean autoclean && \
-  apt-get autoremove -y && \
-  rm -rf /var/lib/{apt,dpkg,cache,log}/
-ENV ELECTRON_DISABLE_SECURITY_WARNINGS "true"
-ENV DRAWIO_DISABLE_UPDATE "true"
 
 COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
