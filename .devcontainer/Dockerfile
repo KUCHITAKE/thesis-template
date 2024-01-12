@@ -1,6 +1,5 @@
 ARG DEBIAN_VERSION=bookworm-slim
 ARG BASEDEV_VERSION=v0.24.0
-ARG TARGETARCH
 
 FROM debian:${DEBIAN_VERSION} AS chktex
 ARG CHKTEX_VERSION=1.7.8
@@ -20,6 +19,7 @@ ARG SCHEME=scheme-basic
 ARG DOCFILES=0
 ARG SRCFILES=0
 ARG TEXLIVE_VERSION=2023
+ARG TARGETARCH
 ARG TEXLIVE_MIRROR=http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends wget gnupg cpanminus && \
