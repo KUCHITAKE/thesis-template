@@ -70,7 +70,7 @@ RUN apt-get update -y && \
   nodejs \
   npm \
   python3 python3-pip python3-matplotlib python3-pandas python3-numpy \
-  xvfb wget libgbm1 libasound2
+  xvfb wget libgbm1 libasound2 libgtk-3-0 libnotify4 libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0 libuuid1 libsecret-1-0
 
 ARG DRAWIO_VERSION=22.1.18
 RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb -O /tmp/drawio.deb && \
