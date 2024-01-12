@@ -1,0 +1,87 @@
+{
+  "name": "latex",
+  "dockerComposeFile": [
+    "docker-compose.yml"
+  ],
+  "service": "vscode",
+  "runServices": [
+    "vscode"
+  ],
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "james-yu.latex-workshop",
+        "eamodio.gitlens",
+        "shardulm94.trailing-spaces",
+        "stkb.rewrap"
+      ],
+      "settings": {
+        "files.eol": "\n",
+        "latex-workshop.linting.chktex.enabled": true,
+        "latex-workshop.linting.chktex.exec.path": "chktex",
+        "latex-workshop.latex.clean.subfolder.enabled": true,
+        "latex-workshop.latex.autoClean.run": "onBuilt",
+        "latex-workshop.intellisense.package.enabled": true,
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.tex": "latex"
+        },
+        "latex-workshop.latexindent.path": "latexindent",
+        "latex-workshop.latexindent.args": [
+          "-c",
+          "%DIR%/",
+          "%TMPFILE%",
+          "-y=defaultIndent: '%INDENT%'"
+        ],
+        "latex-workshop.latex.clean.fileTypes": [
+          "*.aux",
+          "*.bbl",
+          "*.blg",
+          "*.idx",
+          "*.ind",
+          "*.lof",
+          "*.lot",
+          "*.out",
+          "*.toc",
+          "*.acn",
+          "*.acr",
+          "*.alg",
+          "*.glg",
+          "*.glo",
+          "*.gls",
+          "*.ist",
+          "*.fls",
+          "*.log",
+          "*.fdb_latexmk",
+          "*.snm",
+          "*.nav",
+          "*.dvi",
+          "*.synctex.gz"
+        ]
+      },
+      "latex-workshop.latex.outDir": "out",
+      "latex-workshop.latex.recipes": [
+        {
+          "name": "latexmk",
+          "tools": [
+            "latexmk"
+          ]
+        }
+      ],
+      "latex-workshop.latex.tools": [
+        {
+          "name": "latexmk",
+          "command": "latexmk",
+          "args": [
+            "-f",
+            "-outdir=%OUTDIR%",
+            "%DOC%"
+          ]
+        }
+      ]
+    }
+  }
+}
