@@ -87,7 +87,7 @@ RUN tlmgr update --self --all && \
   collection-mathscience \
   upquote \
   makecell \
-  latexdiff \
+  latexdiff &&\
   texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
