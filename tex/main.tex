@@ -7,6 +7,7 @@
 \usepackage{fancyhdr}
 \usepackage{bxjalipsum}
 \usepackage{siunitx}
+\usepackage{amsmath, mathtools}
 \usepackage{booktabs, makecell, tabularx}
 \usepackage[obeyspaces,spaces]{url}
 \usepackage[dvipdfmx]{graphicx}
@@ -22,11 +23,15 @@
 \subfile{sections/title}
 
 \setcounter{tocdepth}{2}
-\tableofcontents
+\tableofcontents{}
 \pagestyle{fancy}
 \lhead{\rightmark}
 \renewcommand{\chaptermark}[1]{\markboth{第\ \normalfont\thechapter\ 章~~#1}{}}
 
 \subfile{sections/intro/intro}
+
+\addcontentsline{toc}{chapter}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\bibliography{references}
 
 \end{document}

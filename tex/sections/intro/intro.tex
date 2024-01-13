@@ -78,7 +78,7 @@
 
 \subsection{表}
 
-\begin{table}[h]
+\begin{table}[H]
   \caption{簡単な表の例}
   \label{tab:easy}
   \centering
@@ -89,7 +89,7 @@
   \end{tabular}
 \end{table}
 
-\begin{table}[!h]
+\begin{table}[H]
   \centering
   \caption{複雑な表の例}
   \label{tab:comp}
@@ -111,11 +111,48 @@
 
 \subsection{図}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\textwidth]{img/latex.png}
+  \includegraphics{fig/gen/sample.pdf}
   \caption{図の例}
   \label{fig:latex}
 \end{figure}
+
+\subsection{数式}
+
+\begin{equation}
+  \label{eq:sample}
+  \int_{-\infty}^{\infty} \exp(-x^2) dx = \sqrt{\pi}
+\end{equation}
+
+\begin{align*}
+  f(x)
+   & = ax^2 + bx + c         \\
+  g(x)
+   & = ax^3 + bx^2 + cx^2 +d
+\end{align*}
+
+\begin{equation}
+  D=\left\{
+  x,y,z\;\left|\;
+  \begin{gathered}
+    x^2+y^2\le 1\\
+    z\ge 0,\;x+y+z\le 1
+  \end{gathered}
+  \right.
+  \right\}
+\end{equation}
+
+\subsection{ソースコード}
+
+\begin{minted}{cpp}
+#include <iostream>
+using namespace std;
+
+int main() {
+  cout << "Hello, World!" << endl;
+  return 0;
+}
+\end{minted}
 
 \end{document}

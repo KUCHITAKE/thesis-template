@@ -7,9 +7,6 @@ on:
 jobs:
   release_image:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        scheme: [dev, devfig, devfigpy]
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-qemu-action@v3
@@ -25,8 +22,6 @@ jobs:
           images: ghcr.io/${{ github.repository }}/devcontainer-latex
           flavor: |
             latest=auto
-            prefix=
-            suffix=-${{ matrix.scheme }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -34,7 +29,6 @@ jobs:
       - uses: docker/build-push-action@v5
         with:
           context: .devcontainer/
-          target: ${{ matrix.scheme }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64

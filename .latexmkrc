@@ -1,13 +1,11 @@
 #!/usr/bin/env perl
 
-# カレントディレクトリ変更
 $do_cd = 1;
 
-# uplatexの呼び出し(後で変わる)
 $pdf_mode = 3;
-$latex = 'uplatex -synctex=1 -file-line-error -shell-escape -halt-on-error %O %S';
-$dvipdf = 'dvipdfmx %O -o %D %S';
-$max_repeat = 5;
+$latex = "texliveonfly -s always -c uplatex -a '-file-line-error -halt-on-error -shell-escape -interaction=nonstopmode %O' %S";
+$dvipdf = 'dvipdfmx -v %O -o %D %S';
+$max_repeat = 10;
 
 # bibtex系
 $bibtex_use=2;

@@ -47,3 +47,4 @@ __*.tex
 *.dtmp
 
 sections/*/fig/gen/*
+fig_hash

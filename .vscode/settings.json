@@ -47,21 +47,28 @@
     {
       "name": "texliveonfly-latexmk",
       "tools": [
-        "texliveonfly-latexmk"
+        "exportfig",
+        "latexmk"
       ]
     }
   ],
   "latex-workshop.latex.tools": [
     {
-      "name": "texliveonfly-latexmk",
-      "command": "texliveonfly",
+      "name": "latexmk",
+      "command": "latexmk",
       "args": [
-        "-s",
-        "always",
-        "-f",
-        "--compiler=latexmk",
-        "--arguments=-r %WORKSPACE_FOLDER%/.latexmkrc -f -outdir=%OUTDIR%",
+        "-r",
+        "%WORKSPACE_FOLDER%/.latexmkrc",
+        "-synctex=1",
+        "-outdir=%OUTDIR%",
         "%DOC%"
+      ]
+    },
+    {
+      "name": "exportfig",
+      "command": "python3",
+      "args": [
+        "%WORKSPACE_FOLDER%/script/generate_figures.py",
       ]
     }
   ]

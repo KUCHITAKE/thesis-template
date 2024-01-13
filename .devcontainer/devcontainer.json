@@ -21,7 +21,8 @@
         "tintinweb.graphviz-interactive-preview",
         "jebbs.plantuml",
         "ms-python.python",
-        "taichi.vscode-textlint"
+        "taichi.vscode-textlint",
+        "ms-python.autopep8"
       ]
     }
   }

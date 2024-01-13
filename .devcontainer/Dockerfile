@@ -14,7 +14,7 @@ RUN ./configure && \
   rm -r *
 
 
-FROM qmcgaw/basedevcontainer:${BASEDEV_VERSION}-debian as devbase
+FROM qmcgaw/basedevcontainer:${BASEDEV_VERSION}-debian as dev
 ARG SCHEME=scheme-basic
 ARG DOCFILES=0
 ARG SRCFILES=0
@@ -24,7 +24,7 @@ ARG TEXLIVE_MIRROR=http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tl
 ENV PATH="/usr/local/texlive/bin:$PATH"
 WORKDIR /tmp/texlive
 RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends wget gnupg cpanminus && \
+  apt-get install -y --no-install-recommends wget gnupg cpanminus libfontconfig1 && \
   wget -qO- ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz | \
   tar -xz --strip-components=1 && \
   export TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 && \
@@ -33,7 +33,7 @@ RUN apt-get update -y && \
   perl install-tl -profile profile.txt --location ${TEXLIVE_MIRROR} && \
   ln -sf /usr/local/texlive/${TEXLIVE_VERSION}/bin/$(uname -m)-linux /usr/local/texlive/bin && \
   cd && \
-  apt-get clean autoclean && \
+  apt-get clean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/texlive /usr/local/texlive/${TEXLIVE_VERSION}/*.log
 WORKDIR /workspace
@@ -46,79 +46,67 @@ RUN apt-get update -y && \
   cpanm -n -q File::HomeDir && \
   cpanm -n -q Unicode::GCString && \
   apt-get remove -y cpanminus make gcc libc6-dev && \
-  apt-get clean autoclean && \
+  apt-get clean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 RUN tlmgr update --self && \
   tlmgr install \
   latexindent \
-  latexmk && \
+  latexdiff \
+  uplatex \
+  pbibtex-base \
+  biber \
+  upmendex \
+  texliveonfly \
+  latexmk \
+  collection-langjapanese \
+  && \
   texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
-COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
-COPY shell/.zshrc-specific shell/.welcome.sh /root/
-
-
-FROM devbase as dev
 
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
   nodejs \
   npm \
-  libfontconfig1 \
-  fonts-ipafont \
-  fonts-ipaexfont \
-  fonts-noto-cjk \
-  fonts-noto-cjk-extra \
-  fonts-texgyre && \
-  apt-get clean autoclean && \
+  &&\
+  apt-get clean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
-
-WORKDIR /workspace
-RUN tlmgr update --self --all && \
-  tlmgr install \
-  collection-bibtexextra \
-  collection-fontsrecommended \
-  collection-langenglish \
-  collection-langjapanese \
-  collection-latexrecommended \
-  collection-mathscience \
-  upquote \
-  makecell \
-  latexdiff &&\
-  texhash && \
-  rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
-  rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
-
-
-FROM dev as devfig
-ARG TARGETARCH
 
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
   plantuml \
   graphviz \
   xvfb wget libgbm1 libasound2
-
 ARG DRAWIO_VERSION=22.1.18
 RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb -O /tmp/drawio.deb && \
   apt-get update && \
   apt-get install -y /tmp/drawio.deb && \
   rm -rf /tmp/drawio.deb && \
-  apt-get clean autoclean && \
+  apt-get clean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
-ENV ELECTRON_DISABLE_SECURITY_WARNINGS "true"
-ENV DRAWIO_DISABLE_UPDATE "true"
 
-FROM devfig as devfigpy
 RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy python3-pygments && \
+  apt-get install -y --no-install-recommends \
+  python3 \
+  python3-pip \
+  python3-venv \
+  python3-matplotlib \
+  python3-pandas \
+  python3-numpy \
+  python3-pygments \
+  python3-flake8 \
+  python3-autopep8 \
+  && \
   python3 -m venv /opt/venv && \
   /opt/venv/bin/pip install japanize-matplotlib && \
-  apt-get clean autoclean && \
+  apt-get clean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 ENV PATH="/opt/venv/bin:$PATH"
+
+COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
+COPY shell/.zshrc-specific shell/.welcome.sh /root/
+
