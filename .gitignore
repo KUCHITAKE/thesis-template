@@ -46,4 +46,4 @@ __*.tex
 *.bkp
 *.dtmp
 
-sections/*/fig/pdf/*.pdf
+sections/*/fig/gen/*
