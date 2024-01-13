@@ -64,6 +64,8 @@ FROM devbase as dev
 
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
+  nodejs \
+  npm \
   libfontconfig1 \
   fonts-ipafont \
   fonts-ipaexfont \
@@ -74,6 +76,7 @@ RUN apt-get update -y && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
 
+WORKDIR /workspace
 RUN tlmgr update --self --all && \
   tlmgr install \
   collection-bibtexextra \
@@ -88,21 +91,19 @@ RUN tlmgr update --self --all && \
   svg \ 
   minted \
   plantuml \
-  graphviz \
+  graphviz && \
   texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
 
 
-FROM devbase as devfig
+FROM dev as devfig
 ARG TARGETARCH
 
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
   plantuml \
   graphviz \
-  nodejs \
-  npm \
   xvfb wget libgbm1 libasound2
 
 ARG DRAWIO_VERSION=22.1.18
@@ -118,10 +119,10 @@ ENV DRAWIO_DISABLE_UPDATE "true"
 
 FROM devfig as devfigpy
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy && \
-    python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install japanize-matplotlib && \
-    apt-get clean autoclean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
+  apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy && \
+  python3 -m venv /opt/venv && \
+  /opt/venv/bin/pip install japanize-matplotlib && \
+  apt-get clean autoclean && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/{apt,dpkg,cache,log}/
 ENV PATH="/opt/venv/bin:$PATH"
