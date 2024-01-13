@@ -16,10 +16,17 @@
         "james-yu.latex-workshop",
         "eamodio.gitlens",
         "shardulm94.trailing-spaces",
-        "stkb.rewrap"
+        "stkb.rewrap",
+        "hediet.vscode-drawio",
+        "tintinweb.graphviz-interactive-preview",
+        "jebbs.plantuml",
+        "ms-python.python",
+        "taichi.vscode-textlint"
       ],
       "settings": {
         "files.eol": "\n",
+        "textlint.configPath": "/workspace/.textlintrc",
+        "textlint.nodePath": "/workspace",
         "latex-workshop.linting.chktex.enabled": true,
         "latex-workshop.linting.chktex.exec.path": "chktex",
         "latex-workshop.latex.clean.subfolder.enabled": true,

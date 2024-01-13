@@ -1,0 +1,25 @@
+\RequirePackage{plautopatch}
+
+\documentclass[uplatex, dvipdfmx, report, 12pt, a4j]{jsbook}
+
+\usepackage{subfiles}
+\usepackage{appendix}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage[dvipdfmx]{xcolor}
+\usepackage[dvipdfmx]{hyperref}
+
+\bibliographystyle{junsrt}
+
+\begin{document}
+
+\subfile{sections/title}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\pagestyle{fancy}
+\lhead{\rightmark}
+\renewcommand{\chaptermark}[1]{\markboth{第\ \normalfont\thechapter\ 章~~#1}{}}
+
+\end{document}

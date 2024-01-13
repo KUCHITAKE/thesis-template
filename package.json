@@ -1,0 +1,16 @@
+{
+  "name": "thesis-template-master",
+  "scripts": {
+      "lint": "find . -type f -name '*.tex' -print  | xargs textlint -f pretty-error",
+      "fix": "find . -type f -name '*.tex' -print  | xargs textlint --fix",
+      "lint-style": "textlint -f checkstyle **/*.tex"
+  },
+  "dependencies": {
+      "textlint": "^13.4.1",
+      "textlint-filter-rule-allowlist": "^4.0.0",
+      "textlint-filter-rule-comments": "^1.2.2",
+      "textlint-plugin-latex2e": "^1.2.1",
+      "textlint-rule-preset-ja-technical-writing": "^9.0.0",
+      "textlint-rule-no-todo": "^2.0.1"
+  }
+}

@@ -13,14 +13,16 @@ RUN ./configure && \
   mv chktex /tmp && \
   rm -r *
 
-FROM qmcgaw/basedevcontainer:${BASEDEV_VERSION}-debian
-WORKDIR /tmp/texlive
+
+FROM qmcgaw/basedevcontainer:${BASEDEV_VERSION}-debian as devbase
 ARG SCHEME=scheme-basic
 ARG DOCFILES=0
 ARG SRCFILES=0
 ARG TEXLIVE_VERSION=2023
 ARG TARGETARCH
 ARG TEXLIVE_MIRROR=http://ctan.math.utah.edu/ctan/tex-archive/systems/texlive/tlnet
+ENV PATH="/usr/local/texlive/bin:$PATH"
+WORKDIR /tmp/texlive
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends wget gnupg cpanminus && \
   wget -qO- ${TEXLIVE_MIRROR}/install-tl-unx.tar.gz | \
@@ -29,14 +31,11 @@ RUN apt-get update -y && \
   export TEXLIVE_INSTALL_NO_WELCOME=1 && \
   printf "selected_scheme ${SCHEME}\ninstopt_letter 0\ntlpdbopt_autobackup 0\ntlpdbopt_desktop_integration 0\ntlpdbopt_file_assocs 0\ntlpdbopt_install_docfiles ${DOCFILES}\ntlpdbopt_install_srcfiles ${SRCFILES}" > profile.txt && \
   perl install-tl -profile profile.txt --location ${TEXLIVE_MIRROR} && \
-  ln -sf /usr/local/texlive/${TEXLIVE_VERSION}/bin/${TARGETARCH}-linux /usr/local/texlive/bin && \
-  # Cleanup
+  ln -sf /usr/local/texlive/${TEXLIVE_VERSION}/bin/$(uname -m)-linux /usr/local/texlive/bin && \
   cd && \
   apt-get clean autoclean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/texlive /usr/local/texlive/${TEXLIVE_VERSION}/*.log
-
-ENV PATH="/usr/local/texlive/bin:$PATH"
 WORKDIR /workspace
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends cpanminus make gcc libc6-dev && \
@@ -50,8 +49,32 @@ RUN apt-get update -y && \
   apt-get clean autoclean && \
   apt-get autoremove -y && \
   rm -rf /var/lib/{apt,dpkg,cache,log}/
-
 RUN tlmgr update --self && \
+  tlmgr install \
+  latexindent \
+  latexmk && \
+  texhash && \
+  rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
+  rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
+COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
+COPY shell/.zshrc-specific shell/.welcome.sh /root/
+
+
+FROM devbase as dev
+
+RUN apt-get update -y && \
+  apt-get install -y --no-install-recommends \
+  libfontconfig1 \
+  fonts-ipafont \
+  fonts-ipaexfont \
+  fonts-noto-cjk \
+  fonts-noto-cjk-extra \
+  fonts-texgyre && \
+  apt-get clean autoclean && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/{apt,dpkg,cache,log}/
+
+RUN tlmgr update --self --all && \
   tlmgr install \
   collection-bibtexextra \
   collection-fontsrecommended \
@@ -67,24 +90,13 @@ RUN tlmgr update --self && \
   minted \
   plantuml \
   graphviz \
-  latexindent \
-  latexmk && \
   texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
 
 
-RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends \
-  libfontconfig1 \
-  fonts-ipafont \
-  fonts-ipaexfont \
-  fonts-noto-cjk \
-  fonts-noto-cjk-extra \
-  fonts-texgyre && \
-  apt-get clean autoclean && \
-  apt-get autoremove -y && \
-  rm -rf /var/lib/{apt,dpkg,cache,log}/
+FROM devbase as devfig
+ARG TARGETARCH
 
 RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
@@ -92,8 +104,7 @@ RUN apt-get update -y && \
   graphviz \
   nodejs \
   npm \
-  python3 python3-pip python3-matplotlib python3-pandas python3-numpy \
-  xvfb wget libgbm1 libasound2 libgtk-3-0 libnotify4 libnss3 libxss1 libxtst6 xdg-utils libatspi2.0-0 libuuid1 libsecret-1-0
+  xvfb wget libgbm1 libasound2
 
 ARG DRAWIO_VERSION=22.1.18
 RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO_VERSION}/drawio-${TARGETARCH}-${DRAWIO_VERSION}.deb -O /tmp/drawio.deb && \
@@ -106,10 +117,11 @@ RUN wget -q https://github.com/jgraph/drawio-desktop/releases/download/v${DRAWIO
 ENV ELECTRON_DISABLE_SECURITY_WARNINGS "true"
 ENV DRAWIO_DISABLE_UPDATE "true"
 
-COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
-COPY shell/.zshrc-specific shell/.welcome.sh /root/
-# Verify binaries work and have the right permissions
-RUN tlmgr version && \
-  latexmk -version && \
-  texhash --version && \
-  chktex --version
+FROM devfig as devfigpy
+RUN apt-get update -y && \
+  apt-get install -y --no-install-recommends \
+  python3 python3-pip python3-matplotlib python3-pandas python3-numpy && \
+  pip3 install japanize-matplotlib && \
+  apt-get clean autoclean && \
+  apt-get autoremove -y && \
+  rm -rf /var/lib/{apt,dpkg,cache,log}/
