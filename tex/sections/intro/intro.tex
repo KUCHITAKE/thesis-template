@@ -1,0 +1,121 @@
+%! TEX root = ../../main.tex
+
+\documentclass[main]{subfiles}
+
+\begin{document}
+
+\chapter{はじめに}
+\section{研究背景}
+これは\LaTeX のテンプレートワークスペースです．
+\subsection{機能}
+次のような機能を持っています．
+\begin{description}
+  \item[Latex] \LaTeX の執筆，コンパイルを行う．基本的な機能は\TeX Liveで提供される．
+  \item[Latex Workshop] VSCodeエディタの拡張機能で，\LaTeX のコンパイルを行う．保存時やワンクリックでコンパイルが可能．
+  \item[Text Lint] 日本語の文章を校正する．
+  \item[PlantUML] UML図を作成する．
+  \item[Graphviz(dot)] ダイアグラム図を作成する．
+  \item[Draw.io] Draw.ioを扱う．
+\end{description}
+
+\subsection{構成}
+
+\section{\LaTeX 基本機能}
+
+\subsection{見出し}
+
+{\let\clearpage\relax \chapter*{章}}
+
+\section*{節}
+
+\subsection*{小節}
+
+\subsubsection*{小々節}
+
+\paragraph*{段落}
+\jalipsumiroha
+
+\subparagraph*{小段落}
+\jalipsumiroha
+
+
+\subsection{字体}
+
+\textbf{bold}
+
+\textit{italic}
+
+\texttt{type writer}
+
+\textgt{gothic}
+
+
+\subsection{箇条書き}
+
+\subsubsection{箇条書き}
+\begin{itemize}
+  \item 箇条書き
+  \item 箇条書き
+  \item 箇条書き
+\end{itemize}
+
+
+\subsubsection{番号付き箇条書き}
+\begin{enumerate}
+  \item 番号付き箇条書き
+  \item 番号付き箇条書き
+  \item 番号付き箇条書き
+\end{enumerate}
+
+
+\subsubsection{説明付き箇条書き}
+\begin{description}
+  \item[説明付き箇条書き] 説明付き箇条書き
+  \item[いろは] 説明付き箇条書き
+  \item[にほへ] 説明付き箇条書き
+\end{description}
+
+
+\subsection{表}
+
+\begin{table}[h]
+  \caption{簡単な表の例}
+  \label{tab:easy}
+  \centering
+  \begin{tabular}{lcc} \toprule
+           & A & B \\ \midrule
+    \LaTeX & 1 & 2 \\
+    \TeX   & 3 & 4 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[!h]
+  \centering
+  \caption{複雑な表の例}
+  \label{tab:comp}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lcccccc}
+    \toprule
+    & \multicolumn{3}{c}{\textbf{Paired Differences1}} & \multicolumn{3}{c}{\textbf{Paired Differences2}}\\
+    \cmidrule(r){2-4} \cmidrule(l){5-7}
+    & \thead{Statistic}
+    & \thead{df}
+    & \thead{Sig.}
+    & \thead{Statistic}
+    & \thead{df}
+    & \thead{Sig.}    \\
+    \midrule
+    Difference & 44.20 & 14.36 & 4.54 & .957 & 10 & .746\\
+    \bottomrule
+  \end{tabular*}
+\end{table}
+
+\subsection{図}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{img/latex.png}
+  \caption{図の例}
+  \label{fig:latex}
+\end{figure}
+
+\end{document}

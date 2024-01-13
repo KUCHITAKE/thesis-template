@@ -5,7 +5,7 @@ $do_cd = 1;
 
 # uplatexの呼び出し(後で変わる)
 $pdf_mode = 3;
-$latex = 'uplatex -synctex=1 -file-line-error -halt-on-error %O %S';
+$latex = 'uplatex -synctex=1 -file-line-error -shell-escape -halt-on-error %O %S';
 $dvipdf = 'dvipdfmx %O -o %D %S';
 $max_repeat = 5;
 

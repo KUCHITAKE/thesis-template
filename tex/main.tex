@@ -4,10 +4,16 @@
 
 \usepackage{subfiles}
 \usepackage{appendix}
+\usepackage{fancyhdr}
+\usepackage{bxjalipsum}
+\usepackage{siunitx}
+\usepackage{booktabs, makecell, tabularx}
+\usepackage[obeyspaces,spaces]{url}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage[dvipdfmx]{color}
 \usepackage[dvipdfmx]{xcolor}
 \usepackage[dvipdfmx]{hyperref}
+\usepackage[outputdir=out, cache=false]{minted}
 
 \bibliographystyle{junsrt}
 
@@ -17,9 +23,10 @@
 
 \setcounter{tocdepth}{2}
 \tableofcontents
-
 \pagestyle{fancy}
 \lhead{\rightmark}
 \renewcommand{\chaptermark}[1]{\markboth{第\ \normalfont\thechapter\ 章~~#1}{}}
+
+\subfile{sections/intro/intro}
 
 \end{document}

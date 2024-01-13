@@ -85,13 +85,9 @@ RUN tlmgr update --self --all && \
   collection-langjapanese \
   collection-latexrecommended \
   collection-mathscience \
+  upquote \
+  makecell \
   latexdiff \
-  siunitx \
-  newtx \
-  svg \ 
-  minted \
-  plantuml \
-  graphviz && \
   texhash && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
   rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
@@ -119,7 +115,7 @@ ENV DRAWIO_DISABLE_UPDATE "true"
 
 FROM devfig as devfigpy
 RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy && \
+  apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy python3-pygments && \
   python3 -m venv /opt/venv && \
   /opt/venv/bin/pip install japanize-matplotlib && \
   apt-get clean autoclean && \

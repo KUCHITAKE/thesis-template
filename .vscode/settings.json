@@ -45,21 +45,22 @@
   "latex-workshop.latex.outDir": "out",
   "latex-workshop.latex.recipes": [
     {
-      "name": "latexmk",
+      "name": "texliveonfly-latexmk",
       "tools": [
-        "latexmk"
+        "texliveonfly-latexmk"
       ]
     }
   ],
   "latex-workshop.latex.tools": [
     {
-      "name": "latexmk",
-      "command": "latexmk",
+      "name": "texliveonfly-latexmk",
+      "command": "texliveonfly",
       "args": [
-        "-r",
-        "%WORKSPACE_FOLDER%/.latexmkrc",
+        "-s",
+        "always",
         "-f",
-        "-outdir=%OUTDIR%",
+        "--compiler=latexmk",
+        "--arguments=-r %WORKSPACE_FOLDER%/.latexmkrc -f -outdir=%OUTDIR%",
         "%DOC%"
       ]
     }
