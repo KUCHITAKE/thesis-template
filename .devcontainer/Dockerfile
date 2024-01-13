@@ -80,7 +80,6 @@ RUN tlmgr update --self --all && \
   collection-fontsrecommended \
   collection-langenglish \
   collection-langjapanese \
-  collection-latexextra \
   collection-latexrecommended \
   collection-mathscience \
   latexdiff \
@@ -119,9 +118,10 @@ ENV DRAWIO_DISABLE_UPDATE "true"
 
 FROM devfig as devfigpy
 RUN apt-get update -y && \
-  apt-get install -y --no-install-recommends \
-  python3 python3-pip python3-matplotlib python3-pandas python3-numpy && \
-  pip3 install japanize-matplotlib && \
-  apt-get clean autoclean && \
-  apt-get autoremove -y && \
-  rm -rf /var/lib/{apt,dpkg,cache,log}/
+    apt-get install -y --no-install-recommends python3 python3-pip python3-venv python3-matplotlib python3-pandas python3-numpy && \
+    python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install japanize-matplotlib && \
+    apt-get clean autoclean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
+ENV PATH="/opt/venv/bin:$PATH"
