@@ -1,26 +1,32 @@
 {
-  "name": "latex",
-  "dockerComposeFile": [
-    "docker-compose.yml"
-  ],
-  "service": "vscode",
-  "runServices": [
-    "vscode"
-  ],
-  "shutdownAction": "stopCompose",
-  "workspaceFolder": "/workspace",
-  "postCreateCommand": "",
+  "image": "mcr.microsoft.com/devcontainers/python:3",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/apt-get-packages:1": {
+      "packages": "plantuml,graphviz,fonts-ipaexfont,cpanminus,librsvg2-bin"
+    },
+    "ghcr.io/prulloac/devcontainer-features/latex:1": {
+      "scheme": "basic",
+      "packages": "latexindent,latexdiff,chktex,uplatex,pbibtex-base,biber,upmendex,texliveonfly,latexmk,collection-langjapanese"
+    },
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {
+      "plugins": "vscode git colorize docker docker-compose node npm python zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting zsh-autocomplete"
+    },
+    "./features/drawio": {
+      "version": "22.1.18"
+    }
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash ./.devcontainer/postCreateCommand.sh",
   "customizations": {
     "vscode": {
       "extensions": [
-        "james-yu.latex-workshop",
         "eamodio.gitlens",
         "shardulm94.trailing-spaces",
         "stkb.rewrap",
         "hediet.vscode-drawio",
         "tintinweb.graphviz-interactive-preview",
         "jebbs.plantuml",
-        "ms-python.python",
         "taichi.vscode-textlint",
         "ms-python.autopep8"
       ]

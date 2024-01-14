@@ -48,7 +48,10 @@
       "name": "texliveonfly-latexmk",
       "tools": [
         "exportfig",
-        "latexmk"
+        "latexmk",
+        "copybbl",
+        "makediff",
+        "latexmk-diff"
       ]
     }
   ],
@@ -62,6 +65,40 @@
         "-synctex=1",
         "-outdir=%OUTDIR%",
         "%DOC%"
+      ]
+    },
+    {
+      "name": "makediff",
+      "command": "latexdiff-vc",
+      "args": [
+        "-e",
+        "utf8",
+        "--git",
+        "--flatten",
+        "--force",
+        "-d",
+        "%OUTDIR%/diff",
+        "-r",
+        "HEAD",
+        "%DOCFILE_EXT%"
+      ]
+    },
+    {
+      "name": "copybbl",
+      "command": "cp",
+      "args": [
+        "%OUTDIR%/main.bbl",
+        "%WORKSPACE_FOLDER%/tex/main.bbl"
+      ]
+    },
+    {
+      "name": "latexmk-diff",
+      "command": "latexmk",
+      "args": [
+        "-r",
+        "%WORKSPACE_FOLDER%/.latexmkrc",
+        "-synctex=1",
+        "%OUTDIR%/diff/main"
       ]
     },
     {

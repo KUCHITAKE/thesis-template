@@ -1,0 +1,9 @@
+digraph G {
+  rankdir = LR;
+  a -> b;
+  b -> c;
+  c -> d;
+  d -> a;
+  学生 -> ラーメン [label = "吸収";];
+  ラーメン -> 学生 [label = "健康";];
+}

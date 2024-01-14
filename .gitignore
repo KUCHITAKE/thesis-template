@@ -9,7 +9,9 @@
 *.acn
 *.acr
 *.alg
-*.bbl
+**/out/*.bbl
+**/diff/*.bbl
+*.pyg
 *.blg
 *.dvi
 *.glg
@@ -30,6 +32,8 @@
 *.pdf
 !figures/*.pdf
 !sections/**/*.pdf
+
+**/diff/*.tex
 
 # Ignore node_modules
 node_modules/

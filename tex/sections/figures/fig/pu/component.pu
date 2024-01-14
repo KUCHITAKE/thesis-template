@@ -1,0 +1,12 @@
+@startuml component
+package "Package 1" {
+  component Component1
+  component Component2
+}
+package "Package 2" {
+  component Component3
+  component Component4
+}
+Component1 --> Component2
+Component3 --> Component4
+@enduml

@@ -1,0 +1,7 @@
+  @startuml sequence
+  たかし -> Bob: Authentication Request
+  Bob --> たかし: Authentication Response
+
+  たかし -> Bob: Another authentication Request
+  たかし <-- Bob: another authentication Responsel
+  @enduml

@@ -14,9 +14,12 @@
 \usepackage[dvipdfmx]{color}
 \usepackage[dvipdfmx]{xcolor}
 \usepackage[dvipdfmx]{hyperref}
+\usepackage{tikz}
 \usepackage[outputdir=out, cache=false]{minted}
+\usepackage[obeyspaces]{url}
 
-\bibliographystyle{junsrt}
+\graphicspath{{.}{../../sections/intro/}{../../sections/figures/}}
+
 
 \begin{document}
 
@@ -26,12 +29,14 @@
 \tableofcontents{}
 \pagestyle{fancy}
 \lhead{\rightmark}
-\renewcommand{\chaptermark}[1]{\markboth{第\ \normalfont\thechapter\ 章~~#1}{}}
+\renewcommand{\chaptermark}[1]{\markboth{第\ \normalfont\thechapter\ 章}{#1}}
 
 \subfile{sections/intro/intro}
 
-\addcontentsline{toc}{chapter}{参考文献}
+\subfile{sections/figures/figures}
+
 \renewcommand{\bibname}{参考文献}
 \bibliography{references}
+\bibliographystyle{junsrt}
 
 \end{document}

@@ -1,0 +1,13 @@
+@startuml usecase
+left to right direction
+skinparam packageStyle rectangle
+actor User
+actor Admin
+rectangle "Use Case Diagram" {
+User -- (Use Case 1)
+User -- (Use Case 2)
+Admin -- (Use Case 3)
+(Use Case 2) ..> (Use Case 3) : include
+(Use Case 1) ..> (Use Case 3) : extend
+}
+@enduml

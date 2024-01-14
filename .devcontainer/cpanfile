@@ -1,0 +1,6 @@
+requires 'Log::Log4perl'
+requires 'XString'
+requires 'Log::Dispatch::File'
+requires 'YAML::Tiny'
+requires 'File::HomeDir'
+requires 'Unicode::GCString'

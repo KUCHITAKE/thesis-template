@@ -1,0 +1,23 @@
+{
+  "name": "drawio",
+  "id": "drawio",
+  "version": "1.0.0",
+  "description": "drawio",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "22.1.18",
+      "description": "The version of drawio to install."
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hediet.vscode-drawio"
+      ]
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

@@ -1,0 +1,10 @@
+@startuml activity
+start
+:foo;
+if (foo) then (yes)
+  :bar;
+else (no)
+  :baz;
+endif
+stop
+@enduml
