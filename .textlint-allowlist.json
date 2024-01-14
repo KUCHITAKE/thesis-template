@@ -1,0 +1,3 @@
+[
+  "/begin{(tikz\\D*?|tabul\\D*?|minted)}[\\s\\S]*?end{(tikz\\D*?|tabul\\D*?|minted)}/m"
+]

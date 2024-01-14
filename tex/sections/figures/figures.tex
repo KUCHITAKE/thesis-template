@@ -10,9 +10,9 @@
 Draw.ioは，ブラウザ上で動作する図作成ツールである．
 
 \subsection{Draw.ioの埋め込み}
-Draw.ioをPDFに変換して、\mintinline{latex}{\includegraphics}で埋め込む．
-\path{*.drawio}は、\path{tex/sections/*/fig/drawio/}に保存すると、
-\path{tex/sections/*/fig/gen/}にPDFが生成されるので、
+Draw.ioをPDFに変換して，\mintinline{latex}{\includegraphics}で埋め込む．
+\path{*.drawio}は，\path{tex/sections/*/fig/drawio/}に保存すると，
+\path{tex/sections/*/fig/gen/}にPDFが生成されるので，
 PDFのパスを\mintinline{latex}{\includegraphics}で指定する．
 
 \subsection{Draw.ioの埋め込み例}
@@ -58,21 +58,21 @@ VSCodeエディタの拡張機能で編集する．
   \label{fig:drawioinclude}
 \end{figure}
 
-\LaTeX{}ファイルをコンパイルすると，PDFが出力されて、図をうめこむことができる。
+\LaTeX{}ファイルをコンパイルすると，PDFが出力されて，図をうめこむことができる．
 
-うまく行かない場合は、中間生成物ディレクトリ\path{tex/out}を消すと良い．
+うまく行かない場合は，中間生成物ディレクトリ\path{tex/out}を消すと良い．
 
 \section{Graphviz(dot)}
 Graphviz(dot)は，dot言語で記述したダイアグラムを作成するツールである．
 
 \subsection{Graphviz(dot)の埋め込み}
-dotファイルをPDFに変換して、\mintinline{latex}{\includegraphics}で埋め込む．
-\path{*.dot}は、\path{tex/sections/*/fig/dot/}に保存すると、
-\path{tex/sections/*/fig/gen/}にPDFが生成されるので、
+dotファイルをPDFに変換して，\mintinline{latex}{\includegraphics}で埋め込む．
+\path{*.dot}は，\path{tex/sections/*/fig/dot/}に保存すると，
+\path{tex/sections/*/fig/gen/}にPDFが生成されるので，
 PDFのパスを\mintinline{latex}{\includegraphics}で指定する．
 
 \subsection{Graphviz(dot)の埋め込み例}
-\path{tex/sections/figures/fig/dot/}に\path{graph.dot}を配置する。
+\path{tex/sections/figures/fig/dot/}に\path{graph.dot}を配置する．
 
 \begin{minted}[linenos,frame=lines]{dot}
   digraph G {
@@ -108,15 +108,15 @@ PDFのパスを\mintinline{latex}{\includegraphics}で指定する．
 PlantUMLは，PlantUML言語で記述したダイアグラムを作成するツールである．
 
 \subsection{PlantUMLの埋め込み}
-PlantUMLファイルをPDFに変換して、\mintinline{latex}{\includegraphics}で埋め込む．
+PlantUMLファイルをPDFに変換して，\mintinline{latex}{\includegraphics}で埋め込む．
 
-\path{*.pu}は、\path{tex/sections/*/fig/pu/}に保存すると、
-\path{tex/sections/*/fig/gen/}にPDFが生成されるので、
+\path{*.pu}は，\path{tex/sections/*/fig/pu/}に保存すると，
+\path{tex/sections/*/fig/gen/}にPDFが生成されるので，
 PDFのパスを\mintinline{latex}{\includegraphics}で指定する．
 
 \subsection{PlantUMLの埋め込み例}
 
-\path{tex/sections/figures/fig/pu/}に\path{puml.pu}を配置する。
+\path{tex/sections/figures/fig/pu/}に\path{puml.pu}を配置する．
 
 \begin{minted}[linenos,frame=lines]{text}
   @startuml
@@ -271,7 +271,7 @@ State2 --> [*]
 
 \section{tikz}
 tikzは，\LaTeX{}で図を作成するためのパッケージである．
-\LaTeX{}内に直接記述することができる．
+\LaTeX{}内に直接記述できる．
 
 \subsection{例}
 
