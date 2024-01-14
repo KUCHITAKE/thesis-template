@@ -1,4 +1,8 @@
 {
+  "search.exclude": {
+    "**/out": true,
+    "**/node_modules": true,
+  },
   "textlint.configPath": "/workspace/.textlintrc",
   "textlint.nodePath": "/workspace",
   "latex-workshop.linting.chktex.enabled": true,
