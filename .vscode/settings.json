@@ -49,7 +49,13 @@
       "tools": [
         "exportfig",
         "latexmk",
-        "copybbl",
+      ]
+    },
+    {
+      "name": "texliveonfly-latexmk-withdiff",
+      "tools": [
+        "exportfig",
+        "latexmk",
         "makediff",
         "latexmk-diff"
       ]
@@ -84,20 +90,13 @@
       ]
     },
     {
-      "name": "copybbl",
-      "command": "cp",
-      "args": [
-        "%OUTDIR%/main.bbl",
-        "%WORKSPACE_FOLDER%/tex/main.bbl"
-      ]
-    },
-    {
       "name": "latexmk-diff",
       "command": "latexmk",
       "args": [
         "-r",
         "%WORKSPACE_FOLDER%/.latexmkrc",
         "-synctex=1",
+        "-outdir=%OUTDIR%",
         "%OUTDIR%/diff/main"
       ]
     },
